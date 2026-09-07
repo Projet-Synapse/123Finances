@@ -2,7 +2,7 @@
   "expo": {
     "name": "123Finances",
     "slug": "finances",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "orientation": "default",
     "icon": "./assets/images/logo.png",
     "scheme": "financesapp",
