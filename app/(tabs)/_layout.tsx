@@ -3,6 +3,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import { Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { UpdateBanner } from '@/components';
 import { Colors } from '@/constants/theme';
 
 export default function TabLayout() {
@@ -10,6 +11,7 @@ export default function TabLayout() {
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.background }}>
+      <UpdateBanner />
       <Tabs
         screenOptions={{
           headerShown: false,

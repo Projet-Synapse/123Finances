@@ -2,10 +2,21 @@
 // transactions, réinitialisation des données. Aucun compte, aucun serveur.
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Button, Card, Chip, EmptyState, IconPicker, Input, Row, SectionHeader } from '@/components';
+import {
+  Button,
+  Card,
+  Chip,
+  EmptyState,
+  IconPicker,
+  Input,
+  Row,
+  SectionHeader,
+  Toggle,
+} from '@/components';
 import { Colors, Spacing, Typography } from '@/constants/theme';
 import { STORAGE_KEYS } from '@/constants/config';
 import { useFinance } from '@/contexts/FinanceContext';
+import { useUpdates } from '@/hooks/useUpdates';
 import { desktop, isBrowser, isNative } from '@/services/platform';
 import { formatCents } from '@/services/money';
 import type { TransactionType } from '@/types';
@@ -47,6 +58,7 @@ function buildCsv(
 
 export default function ReglagesScreen() {
   const { categories, addCategory, removeCategory, transactions, accounts, totalBalanceCents } = useFinance();
+  const update = useUpdates();
   const [kind, setKind] = useState<TransactionType>('expense');
   const [name, setName] = useState('');
   const [icon, setIcon] = useState('label');
@@ -101,6 +113,25 @@ export default function ReglagesScreen() {
   };
 
   const bridge = desktop();
+
+  const updateStatusLabel = (u: ReturnType<typeof useUpdates>): string => {
+    switch (u.stage) {
+      case 'checking':
+        return 'Vérification…';
+      case 'available':
+        return u.latestVersion ? `${u.latestVersion} disponible` : 'Mise à jour disponible';
+      case 'downloading':
+        return typeof u.progress === 'number' ? `Téléchargement ${u.progress}%` : 'Téléchargement…';
+      case 'ready':
+        return 'Prête à installer';
+      case 'error':
+        return 'Échec de la vérification';
+      case 'up-to-date':
+        return 'À jour';
+      default:
+        return '—';
+    }
+  };
 
   return (
     <ScrollView
@@ -172,6 +203,35 @@ export default function ReglagesScreen() {
           label={confirmReset ? 'Confirmer la réinitialisation complète' : 'Réinitialiser toutes les données'}
           variant="danger"
           onPress={resetAll}
+        />
+      </Card>
+
+      <SectionHeader title="Mises à jour" subtitle="Gardez l'application à jour" />
+      <Card>
+        <Text style={styles.dataLine}>Version installée : {update.currentVersion}</Text>
+        <Text style={styles.dataNote}>{updateStatusLabel(update)}</Text>
+        {update.error ? <Text style={styles.updateError}>{update.error}</Text> : null}
+        <View style={styles.spacing} />
+        <Button
+          label={update.stage === 'checking' ? 'Vérification…' : 'Rechercher une mise à jour'}
+          variant="secondary"
+          onPress={() => void update.check()}
+          loading={update.stage === 'checking'}
+        />
+        {(update.stage === 'available' || update.stage === 'ready') && update.canSelfInstall ? (
+          <>
+            <View style={styles.spacing} />
+            <Button
+              label={update.stage === 'ready' ? 'Redémarrer et installer' : 'Installer et redémarrer'}
+              onPress={() => void update.applyUpdate()}
+            />
+          </>
+        ) : null}
+        <Toggle
+          label="Mise à jour automatique"
+          description="Télécharge les nouvelles versions en arrière-plan et les installe à la fermeture de l'application."
+          value={update.autoUpdate}
+          onChange={update.setAutoUpdate}
         />
       </Card>
 
@@ -248,6 +308,11 @@ const styles = StyleSheet.create({
     color: Colors.textMuted,
     fontSize: Typography.sizes.xs,
     lineHeight: 18,
+  },
+  updateError: {
+    color: Colors.error,
+    fontSize: Typography.sizes.xs,
+    marginTop: Spacing.xs,
   },
   about: {
     color: Colors.textMuted,

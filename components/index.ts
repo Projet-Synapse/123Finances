@@ -14,3 +14,4 @@ export { BudgetCard } from './feature/BudgetCard';
 export { IconPicker, ICON_CHOICES } from './feature/IconPicker';
 export { MonthSwitcher } from './feature/MonthSwitcher';
 export { TransactionRow } from './feature/TransactionRow';
+export { UpdateBanner } from './feature/UpdateBanner';
