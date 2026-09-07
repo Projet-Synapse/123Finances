@@ -2,17 +2,7 @@
 // transactions, réinitialisation des données. Aucun compte, aucun serveur.
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import {
-  Button,
-  Card,
-  Chip,
-  EmptyState,
-  IconPicker,
-  Input,
-  Row,
-  SectionHeader,
-  Toggle,
-} from '@/components';
+import { Button, Card, Chip, EmptyState, IconPicker, Input, Row, SectionHeader, Toggle } from '@/components';
 import { Colors, Spacing, Typography } from '@/constants/theme';
 import { STORAGE_KEYS } from '@/constants/config';
 import { useFinance } from '@/contexts/FinanceContext';
