@@ -1,0 +1,17 @@
+{
+  "name": "finances-desktop",
+  "productName": "123Finances",
+  "version": "0.1.0",
+  "description": "123Finances — finances personnelles, 100 % locales",
+  "main": "main.js",
+  "author": {
+    "name": "Projet-Synapse",
+    "email": "catelyn2332-design@users.noreply.github.com"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "electron-log": "^5.2.0",
+    "electron-updater": "^6.3.9"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "name": "onspace-app",
+  "main": "expo-router/entry",
+  "version": "0.1.0",
+  "scripts": {
+    "prepare": "husky",
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "verify": "pnpm run typecheck && pnpm run lint && pnpm run format:check",
+    "build:web": "expo export --platform web --output-dir dist",
+    "desktop:install": "pnpm install --dir desktop",
+    "desktop:dev": "concurrently -k -n expo,electron -c cyan,magenta \"expo start --web --port 8081\" \"wait-on http://localhost:8081 && electron desktop\"",
+    "desktop:build": "node scripts/build-desktop.js",
+    "desktop:build:linux": "node scripts/build-desktop.js --linux",
+    "desktop:build:mac": "node scripts/build-desktop.js --mac",
+    "desktop:build:win": "node scripts/build-desktop.js --win",
+    "desktop:release": "node scripts/build-desktop.js --publish"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^14.0.0",
+    "@react-native-async-storage/async-storage": "2.1.2",
+    "@react-navigation/bottom-tabs": "7.3.10",
+    "@react-navigation/native": "7.1.6",
+    "expo": "~53.0.9",
+    "expo-constants": "~17.1.6",
+    "expo-haptics": "~14.1.4",
+    "expo-router": "~5.0.7",
+    "expo-splash-screen": "~0.30.8",
+    "expo-status-bar": "~2.2.3",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-native": "0.79.3",
+    "react-native-gesture-handler": "~2.24.0",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-screens": "~4.11.1",
+    "react-native-web": "~0.20.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@types/react": "~19.0.10",
+    "concurrently": "^10.0.5",
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8",
+    "eslint": "^9.25.0",
+    "eslint-config-expo": "~9.2.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.4.1",
+    "prettier": "^3.9.6",
+    "typescript": "~5.8.3",
+    "wait-on": "^9.1.0"
+  },
+  "private": true,
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}
