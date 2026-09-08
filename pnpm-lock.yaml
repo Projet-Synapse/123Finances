@@ -29,6 +29,9 @@ importers:
       expo-haptics:
         specifier: ~14.1.4
         version: 14.1.4(expo@53.0.27(@babel/core@7.29.7)(@expo/metro-runtime@5.0.4(react-native@0.79.3(@babel/core@7.29.7)(@types/react@19.0.14)(react@19.0.0)))(react-native@0.79.3(@babel/core@7.29.7)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))
+      expo-modules-autolinking:
+        specifier: '*'
+        version: 2.1.15
       expo-router:
         specifier: ~5.0.7
         version: 5.0.7(09ecaf4ea8b99967ec7a08fadbde073e)
