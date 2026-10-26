@@ -3,7 +3,7 @@
 # desktop/package.json holds the (tiny) runtime dependency set that ships.
 appId: com.finances.app
 productName: 123Finances
-copyright: Copyright © 2026 123Finances
+copyright: Copyright © 2026 Catelyn2332
 
 directories:
   app: desktop
